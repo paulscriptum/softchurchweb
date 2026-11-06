@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+:root,
+[data-theme="light"] {
+  --bg: #fafaf8;
+  --fg: #121010;
+  --muted: #6b6872;
+  --body: #2e2b2a;
+  --line: #e3e0db;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0e0c0c;
+  --fg: #f4f2ee;
+  --muted: #a29d97;
+  --body: #d9d5cf;
+  --line: #2e2a28;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-body: var(--body);
+  --color-line: var(--line);
+
+  --font-sans: var(--font-brand), system-ui, sans-serif;
+
+  --text-meta: 13px;
+  --text-nav: 14px;
+  --text-base: 16px;
+  --text-base--line-height: 1.4;
+  --text-lead: 24px;
+  --text-statement: 30px;
+  --text-hero: 36px;
+
+  --tracking-tight: -0.015em;
+  --tracking-tighter: -0.02em;
+
+  --container-content: 1200px;
+  --container-about: 760px;
+  --container-manifesto: 620px;
+}
+
+@layer base {
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-weight: 300;
+    line-height: 1.4;
+  }
+
+  a:hover {
+    opacity: 0.6;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--fg);
+    outline-offset: 4px;
+  }
+}
+
+@keyframes breath {
+  0%,
+  100% {
+    transform: scale(0.88);
+    opacity: 0.72;
+    filter: blur(calc(var(--dot-blur) * 1.45));
+  }
+  50% {
+    transform: scale(1.07);
+    opacity: 1;
+    filter: blur(calc(var(--dot-blur) * 0.85));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-dot {
+    --p: 0;
+    transform: translateY(calc(var(--p) * 200px)) scale(calc(1 - var(--p) * 0.6));
+    opacity: calc(1 - var(--p) * 0.8);
+    will-change: transform, opacity;
+  }
+
+  .hero-dot > * {
+    animation: breath 6.5s ease-in-out infinite;
+  }
+
+  /* about: the stage is pinned while the statements melt into one another */
+  .js .about-track {
+    height: calc(var(--count) * 100svh);
+  }
+
+  .js .about-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .js .about-lines {
+    display: grid;
+    width: 100%;
+  }
+
+  .js .about-item {
+    grid-area: 1 / 1;
+    padding: 0;
+  }
+
+  .js .about-item:not(:first-child) .about-dot {
+    visibility: hidden;
+  }
+
+  .js .about-item:not(:first-child) .about-text {
+    opacity: 0;
+  }
+
+  .js .about-text {
+    will-change: opacity, transform, filter;
+  }
+}

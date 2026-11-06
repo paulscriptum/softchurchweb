@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>soft.church</title>
+<meta name="description" content="a quiet house for given things. one service every seventh day. 333 in total.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap">
+<!--
+  APPROVED DESIGN REFERENCE — static, no build step.
+  This is the look and copy to reproduce. Font (Inter) is a placeholder for a custom brand font.
+  Toggle the theme by setting data-theme="dark" on <html>.
+-->
+<style>
+  :root, [data-theme="light"] {
+    --bg: #FAFAF8; --fg: #121010; --muted: #6B6872; --body: #2E2B2A; --line: #E3E0DB;
+  }
+  [data-theme="dark"] {
+    --bg: #0E0C0C; --fg: #F4F2EE; --muted: #A29D97; --body: #D9D5CF; --line: #2E2A28;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font-family: Inter, system-ui, sans-serif; font-weight: 300; line-height: 1.4; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { opacity: .6; }
+  :focus-visible { outline: 1px solid var(--fg); outline-offset: 4px; }
+
+  /* the brand dot: blur = 8.2% of its diameter */
+  .dot { display: inline-block; border-radius: 50%; background: var(--fg); }
+  .dot--logo { width: 6px; height: 6px; margin: 4px 3px 0; filter: blur(1px); }
+  .dot--hero { width: 260px; height: 260px; filter: blur(21px); }
+  .dot--sep  { width: 10px; height: 10px; filter: blur(2px); display: block; }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 13px; }
+
+  header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; padding-top: 20px; padding-bottom: 20px; font-size: 14px; }
+  .logo { display: flex; align-items: center; padding: 12px 0; font-size: 16px; letter-spacing: -0.01em; }
+  header nav { display: flex; flex-wrap: wrap; gap: 0 24px; }
+  header nav a { padding: 12px 0; }
+
+  .hero { min-height: 720px; padding: 72px 24px 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 56px; text-align: center; }
+  .hero h1 { margin: 0; max-width: 620px; font-size: 36px; font-weight: 300; line-height: 1.15; letter-spacing: -0.02em; }
+  .hero .meta { display: flex; flex-direction: column; gap: 6px; }
+
+  .about { max-width: 760px; margin: 0 auto; padding: 0 24px; text-align: center; }
+  .statement { padding: 150px 0; display: flex; flex-direction: column; align-items: center; gap: 36px; }
+  .statement p { margin: 0; font-size: 30px; line-height: 1.25; letter-spacing: -0.015em; }
+
+  .objects { padding-top: 120px; padding-bottom: 120px; display: flex; flex-direction: column; gap: 40px; }
+  .objects-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+  .objects-head h2 { margin: 0; font-size: 13px; font-weight: 400; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 48px 28px; }
+  .card { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .card img { display: block; width: 100%; aspect-ratio: 6 / 13; object-fit: cover; background: var(--line); }
+  .card .info { display: flex; flex-direction: column; gap: 3px; }
+  .card .title { font-weight: 400; }
+  .card .action { display: flex; justify-content: space-between; align-items: center; min-height: 44px; border-top: 1px solid var(--line); font-size: 13px; }
+  .card .action--soon { color: var(--muted); }
+
+  .manifesto { max-width: 620px; margin: 0 auto; padding: 120px 24px; display: flex; flex-direction: column; gap: 40px; font-size: 16px; line-height: 1.6; }
+  .manifesto h2 { margin: 0; font-size: 13px; font-weight: 400; }
+  .manifesto .lead { margin: 6px 0 0; font-size: 24px; line-height: 1.25; letter-spacing: -0.015em; }
+  .manifesto h3 { margin: 0 0 6px; font-size: 16px; font-weight: 400; }
+  .manifesto p { margin: 0; }
+  .manifesto .t p { color: var(--body); }
+
+  footer { border-top: 1px solid var(--line); }
+  .foot { padding-top: 80px; padding-bottom: 40px; display: flex; flex-direction: column; gap: 72px; }
+  .foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 48px; }
+  form { flex: 1 1 320px; max-width: 460px; display: flex; flex-direction: column; gap: 14px; }
+  form h2 { margin: 0; font-size: 24px; font-weight: 300; letter-spacing: -0.015em; }
+  form p { margin: 0; }
+  .field { display: flex; flex-wrap: wrap; gap: 12px; }
+  input { flex: 1 1 200px; min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--fg); font: inherit; font-size: 14px; }
+  button { min-height: 44px; padding: 0 22px; border: 0; border-radius: 999px; background: var(--fg); color: var(--bg); font: inherit; font-size: 14px; cursor: pointer; }
+  .foot nav { display: flex; flex-direction: column; font-size: 14px; }
+  .foot nav a { padding: 12px 0; }
+  .foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+</style>
+</head>
+<body>
+
+<header id="top" class="wrap">
+  <a class="logo" href="#top"><span>soft</span><span class="dot dot--logo" aria-hidden="true"></span><span>church</span></a>
+  <nav aria-label="Main">
+    <a href="#about">about</a>
+    <a href="#objects">objects</a>
+    <a href="#manifesto">manifesto</a>
+    <a href="#witness">witness</a>
+  </nav>
+</header>
+
+<section class="hero" aria-label="soft.church">
+  <span class="dot dot--hero" aria-hidden="true"></span>
+  <h1>everything is given. some of it is kept.</h1>
+  <div class="meta small muted">
+    <span>service 001/333 · the seventh day</span>
+    <span>scroll slowly.</span>
+  </div>
+</section>
+
+<section id="about" class="about" aria-label="about">
+  <div class="statement"><span class="dot dot--sep" aria-hidden="true"></span><p>a quiet house for given things.</p></div>
+  <div class="statement"><span class="dot dot--sep" aria-hidden="true"></span><p>every seventh day, a service.</p></div>
+  <div class="statement"><span class="dot dot--sep" aria-hidden="true"></span><p>some things are offered. free, for seven days.</p></div>
+  <div class="statement"><span class="dot dot--sep" aria-hidden="true"></span><p>some things are kept. one, three, twelve, thirty-three, three hundred thirty-three.</p></div>
+  <div class="statement"><span class="dot dot--sep" aria-hidden="true"></span><p>333 services. then the doors close.</p></div>
+</section>
+
+<section id="objects" class="objects wrap" aria-label="objects">
+  <div class="objects-head small">
+    <h2>objects</h2>
+    <span class="muted">service 001 is open · the next arrives on sunday</span>
+  </div>
+  <div class="grid">
+    <article class="card">
+      <img src="objects/obj-001-white-dot.jpg" alt="a white blurred dot on black">
+      <div class="info small"><span class="muted">service 001 · offering</span><span class="title">white dot</span><span class="muted">sign · free for seven days</span></div>
+      <a class="action" href="../wallpapers/offering-001-white-dot.png" download><span>receive</span><span aria-hidden="true">→</span></a>
+    </article>
+    <article class="card">
+      <img src="objects/obj-001-melting-dot.jpg" alt="a white dot melting downward in streaks">
+      <div class="info small"><span class="muted">service 001 · keeping</span><span class="title">melting dot</span><span class="muted">sign · kept by 0 of 333</span></div>
+      <a class="action" href="#"><span>keep · [PRICE]</span><span aria-hidden="true">→</span></a>
+    </article>
+    <article class="card">
+      <img src="objects/obj-002-black-dot.jpg" alt="a black blurred dot on paper">
+      <div class="info small"><span class="muted">service 002 · offering</span><span class="title">black dot</span><span class="muted">sign · free for seven days</span></div>
+      <span class="action action--soon" aria-disabled="true"><span>sunday</span><span aria-hidden="true">→</span></span>
+    </article>
+    <article class="card">
+      <img src="objects/obj-002-silk-shell.jpg" alt="a lilac shell of light lines on black">
+      <div class="info small"><span class="muted">service 002 · keeping</span><span class="title">silk shell</span><span class="muted">sign · 33 keepers</span></div>
+      <span class="action action--soon" aria-disabled="true"><span>sunday</span><span aria-hidden="true">→</span></span>
+    </article>
+    <article class="card">
+      <img src="objects/obj-003-growth.jpg" alt="black coral-like growth on paper">
+      <div class="info small"><span class="muted">service 003 · keeping</span><span class="title">growth</span><span class="muted">sign · 33 keepers</span></div>
+      <span class="action action--soon" aria-disabled="true"><span>soon</span><span aria-hidden="true">→</span></span>
+    </article>
+    <article class="card">
+      <img src="objects/obj-004-veil.jpg" alt="silky veils of light on black">
+      <div class="info small"><span class="muted">service 004 · relic</span><span class="title">veil</span><span class="muted">sign · 1/1 · auction</span></div>
+      <span class="action action--soon" aria-disabled="true"><span>soon</span><span aria-hidden="true">→</span></span>
+    </article>
+  </div>
+</section>
+
+<section id="manifesto" class="manifesto" aria-label="manifesto">
+  <div>
+    <h2>soft.church · statement 000</h2>
+    <p class="lead">a quiet house for given things.</p>
+  </div>
+  <div class="t"><h3>0. everything is given.</h3><p>we didn't make the light. we didn't make the sound. we didn't make the hands. we only arrange what was handed to us. gratitude is the first material.</p></div>
+  <div class="t"><h3>1. god is everywhere.</h3><p>in a field and in a feed. in a stone, a sound, a forgotten page. there is no online or offline for god. we keep the traces, in pixels and in matter.</p></div>
+  <div class="t"><h3>2. an artifact is a witness.</h3><p>every object here is proof that something happened to someone. we don't sell things. we pass on evidence.</p></div>
+  <div class="t"><h3>3. some things fall from the sky.</h3><p>every seventh day something is free. this is not a promotion. grace can't be owned. it can only be received.</p></div>
+  <div class="t"><h3>4. some things must be kept.</h3><p>others exist in small numbers. one, three, twelve, thirty-three, three hundred thirty-three. the number is part of the meaning. fewer keepers, heavier trust.</p></div>
+  <div class="t"><h3>5. quiet is the signal.</h3><p>soft light. white space. slow sound. we don't shout. if you found us, you were already looking.</p></div>
+  <div class="t"><h3>6. we speak our own language.</h3><p>brands wore the old words out. so we made new ones. the words arrive with the objects.</p></div>
+  <div class="t"><h3>7. made with friends.</h3><p>artists, musicians, people who write code at night. every guest brings a world. this is a shared house.</p></div>
+  <div class="t"><h3>8. a tool can be a prayer.</h3><p>a small piece of software can hold attention like a candle. we make instruments for listening, waiting, wondering.</p></div>
+  <div class="t"><h3>9. everything ends.</h3><p>three hundred thirty-three services. one every seventh day. then the doors close. the ending is what gives each artifact its weight.</p></div>
+  <div class="t"><h3>10. be still.</h3><p>the world is loud and always in a hurry. we are not. nothing here asks you to rush, to scroll faster or to want more. stop for a moment. look. listen. that is all we ask of you.</p></div>
+  <p>amen.<br>333</p>
+</section>
+
+<footer id="witness">
+  <div class="foot wrap">
+    <div class="foot-top">
+      <form onsubmit="event.preventDefault()">
+        <h2>become a witness.</h2>
+        <p class="small muted">one letter every seventh day. nothing else.</p>
+        <label for="witness-email" class="small muted">email</label>
+        <div class="field">
+          <input id="witness-email" type="email" placeholder="you@somewhere" required>
+          <button type="submit">witness</button>
+        </div>
+      </form>
+      <nav aria-label="Elsewhere">
+        <a href="https://instagram.com/soft.church">instagram · @soft.church</a>
+        <a href="https://333objects.com">the archive</a>
+        <a href="#manifesto">statement 000</a>
+      </nav>
+    </div>
+    <div class="foot-bottom small muted">
+      <span>received with gratitude.</span>
+      <span>333</span>
+      <span>© 2026 soft.church</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

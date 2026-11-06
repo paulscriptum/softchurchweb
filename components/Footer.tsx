@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { COPYRIGHT_YEAR, INSTAGRAM_HANDLE, SITE_NAME } from '@/config/site';
+import { COPYRIGHT_YEAR, CURATOR_NAME, CURATOR_URL, INSTAGRAM_HANDLE, SITE_NAME } from '@/config/site';
 import type { Settings } from '@/content/types';
 import { WitnessForm } from './WitnessForm';
 
@@ -19,6 +19,9 @@ export function Footer({ settings }: { settings: Settings }) {
             <Link href="/#manifesto" className="py-3">
               statement 000
             </Link>
+            <a href={CURATOR_URL} rel="noopener" className="py-3">
+              curated by {CURATOR_NAME}
+            </a>
           </nav>
         </div>
         <div className="flex flex-wrap justify-between gap-x-6 gap-y-2 text-meta text-muted">

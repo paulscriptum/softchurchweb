@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/config/site';
+import { SoundProvider } from '@/components/Sound';
 import { ThemeScript } from '@/components/ThemeScript';
 import { brandFont } from './fonts';
 import './globals.css';
@@ -38,7 +39,9 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       <head>
         <ThemeScript />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <SoundProvider>{children}</SoundProvider>
+      </body>
     </html>
   );
 }

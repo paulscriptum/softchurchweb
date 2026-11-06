@@ -1,7 +1,7 @@
 export const statements: string[] = [
   'a quiet house for given things.',
-  'every seventh day, a service.',
-  'some things are offered. free, for seven days.',
-  'some things are kept. one, three, twelve, thirty-three, three hundred thirty-three.',
+  'every seventh day, a service opens with one new object.',
+  'a picture, a sound, or a small tool you can use. sometimes made with a guest.',
+  'some you can receive free for seven days. some you can keep for a price.',
   '333 services. then the doors close.',
 ];

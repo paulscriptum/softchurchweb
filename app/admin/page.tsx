@@ -10,6 +10,7 @@ import { readSiteData } from '@/lib/data';
 import { pad3 } from '@/lib/format';
 import {
   currentService,
+  doorsOpenAt,
   formatInstant,
   formatRemaining,
   serviceOpensAt,
@@ -47,6 +48,7 @@ async function Dashboard({ searchParams }: { searchParams: PageProps<'/admin'>['
   const current = currentService(now, settings);
   const next = Math.min(current + 1, settings.totalServices);
   const nextAt = serviceOpensAt(next, settings);
+  const opensAt = doorsOpenAt(settings);
   const services = [...new Set(artifacts.map((a) => a.service))].sort((a, b) => a - b);
   const provider = providerName();
   const drafts = artifacts.filter((a) => a.draft).length;
@@ -56,8 +58,17 @@ async function Dashboard({ searchParams }: { searchParams: PageProps<'/admin'>['
       <section className="flex flex-wrap items-end justify-between gap-6">
         <div className="flex flex-col gap-1.5">
           <h1 className="text-lead tracking-tight">
-            {current === 0 ? 'before the first service.' : `service ${pad3(current)} is open.`}
+            {now < opensAt
+              ? 'before the doors open.'
+              : current === 0
+                ? 'statement 000 is open.'
+                : `service ${pad3(current)} is open.`}
           </h1>
+          {now < opensAt && (
+            <p className="text-meta text-muted">
+              {`statement 000 opens ${formatInstant(opensAt, settings)} · in ${formatRemaining(opensAt - now)}`}
+            </p>
+          )}
           <p className="text-meta text-muted">
             {current < settings.totalServices
               ? `service ${pad3(next)} opens ${formatInstant(nextAt, settings)} · in ${formatRemaining(nextAt - now)}`

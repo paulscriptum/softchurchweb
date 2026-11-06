@@ -6,7 +6,7 @@ export function Hero({ settings, renderedAt }: { settings: Settings; renderedAt:
   return (
     <section
       aria-label="soft.church"
-      className="flex min-h-[720px] flex-col items-center justify-center gap-14 px-6 pt-[72px] pb-14 text-center"
+      className="flex min-h-[740px] overflow-x-clip flex-col items-center justify-center gap-14 px-6 pt-[104px] sm:min-h-[780px] sm:pt-[136px] pb-14 text-center"
     >
       <HeroDot size={260} />
       <h1 className="relative max-w-manifesto text-hero leading-[1.15] font-light tracking-tighter">

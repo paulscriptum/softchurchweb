@@ -11,8 +11,8 @@ export const manifesto = {
     },
     {
       number: 1,
-      title: 'god is everywhere.',
-      body: 'in a field and in a feed. in a stone, a sound, a forgotten page. there is no online or offline for god. we keep the traces, in pixels and in matter.',
+      title: 'God is everywhere.',
+      body: 'in a field and in a feed. in a stone, a sound, a forgotten page. there is no online or offline for God. we keep the traces, in pixels and in matter.',
     },
     {
       number: 2,

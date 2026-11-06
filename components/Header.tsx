@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { BlurDot } from './BlurDot';
+import { SoundToggle } from './Sound';
 import { ThemeToggle } from './ThemeToggle';
 
 const nav = [
@@ -35,8 +36,8 @@ export function Header({ home = true }: { home?: boolean }) {
           {logo}
         </Link>
       )}
-      <div className="flex flex-wrap items-center gap-x-6">
-        <nav aria-label="Main" className="flex flex-wrap gap-x-6">
+      <div className="flex flex-wrap items-center gap-x-3.5 sm:gap-x-6">
+        <nav aria-label="Main" className="flex flex-wrap gap-x-3.5 sm:gap-x-6">
           {nav.map((item) => (
             home ? (
               <a key={item.id} href={`#${item.id}`} className="py-3">
@@ -49,7 +50,10 @@ export function Header({ home = true }: { home?: boolean }) {
             )
           ))}
         </nav>
-        <ThemeToggle />
+        <div className="flex items-center gap-x-3.5 sm:gap-x-6">
+          <SoundToggle />
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

@@ -15,7 +15,7 @@ export function SettingsForm({ settings }: { settings: Settings }) {
   return (
     <form action={action} className="grid gap-4 sm:grid-cols-2">
       <label className={labelClass}>
-        service 001 opens on
+        service 001 opens on (statement 000 a week before)
         <input
           name="firstDate"
           type="date"

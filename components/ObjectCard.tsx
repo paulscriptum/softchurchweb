@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { metaLine, objectPath, serviceLine, type ResolvedArtifact } from '@/lib/artifact';
+import { metaLines, objectPath, serviceLine, type ResolvedArtifact } from '@/lib/artifact';
 import { CollectButton } from './CollectButton';
 
 export function ObjectCard({ artifact }: { artifact: ResolvedArtifact }) {
@@ -27,9 +27,15 @@ export function ObjectCard({ artifact }: { artifact: ResolvedArtifact }) {
         <h3 className="font-normal">
           <Link href={href}>{artifact.title}</Link>
         </h3>
-        <span className="text-muted">{metaLine(artifact)}</span>
+        {metaLines(artifact).map((line) => (
+          <span key={line} className="text-muted">
+            {line}
+          </span>
+        ))}
       </div>
-      <CollectButton artifact={artifact} />
+      <div className="mt-auto">
+        <CollectButton artifact={artifact} />
+      </div>
     </article>
   );
 }

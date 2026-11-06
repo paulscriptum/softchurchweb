@@ -68,30 +68,27 @@
   }
 }
 
+/* only transform and opacity: an animated blur repaints every frame, which Safari and phones can't afford */
 @keyframes breath {
   0%,
   100% {
     transform: scale(0.88);
     opacity: 0.72;
-    filter: blur(calc(var(--dot-blur) * 1.45));
   }
   50% {
     transform: scale(1.07);
     opacity: 1;
-    filter: blur(calc(var(--dot-blur) * 0.85));
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .hero-dot {
-    --p: 0;
-    transform: translateY(calc(var(--p) * 200px)) scale(calc(1 - var(--p) * 0.6));
-    opacity: calc(1 - var(--p) * 0.8);
     will-change: transform, opacity;
   }
 
-  .hero-dot > * {
+  .hero-breath {
     animation: breath 6.5s ease-in-out infinite;
+    will-change: transform, opacity;
   }
 
   /* about: the stage is pinned while the statements melt into one another */
@@ -127,6 +124,6 @@
   }
 
   .js .about-text {
-    will-change: opacity, transform, filter;
+    will-change: opacity, transform;
   }
 }

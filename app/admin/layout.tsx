@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { BlurDot } from '@/components/BlurDot';
+import { Silence } from '@/components/Sound';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default function AdminLayout({ children }: LayoutProps<'/admin'>) {
   return (
     <div className="mx-auto flex min-h-svh max-w-content flex-col gap-12 px-6 pb-24">
+      <Silence />
       <header className="flex flex-wrap items-center justify-between gap-x-6 py-5 text-nav">
         <Link href="/admin" className="flex items-center py-3 text-base tracking-[-0.01em]">
           <span>soft</span>

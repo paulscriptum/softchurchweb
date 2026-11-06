@@ -48,7 +48,10 @@ export interface ArtifactRecord extends Omit<Artifact, 'status'> {
 }
 
 export interface Settings {
-  /** ISO instant when service 001 opens; every next service opens seven days later. */
+  /**
+   * ISO instant when service 001 opens; every next service opens seven days later.
+   * The week before it is service 000, when the doors open with statement 000.
+   */
   firstServiceAt: string;
   timezone: string;
   totalServices: number;

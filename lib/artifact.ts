@@ -56,20 +56,27 @@ export function serviceLine(a: Pick<Artifact, 'service' | 'kind'>): string {
   return `service ${pad3(a.service)} · ${a.kind}`;
 }
 
-export function metaLine(a: Artifact): string {
-  let line: string;
+/** Each entry is meant to stay on one line in the narrow grid card. */
+export function metaLines(a: Artifact): string[] {
+  let lines: string[];
   switch (a.kind) {
     case 'offering':
-      line = `${a.type} · free for seven days`;
+      lines = [`${a.type} · free`, 'for seven days'];
       break;
     case 'keeping':
-      line = `${a.type} · edition of ${a.edition}`;
+      lines = [`${a.type} · edition of ${a.edition}`];
       break;
     case 'relic':
-      line = `${a.type} · 1/1 · auction`;
+      lines = [`${a.type} · 1/1 · auction`];
       break;
   }
-  return a.guest ? `${line} · guest: ${a.guest}` : line;
+  return a.guest ? [...lines, `guest: ${a.guest}`] : lines;
+}
+
+export function metaLine(a: Artifact): string {
+  const [first, ...rest] = metaLines(a);
+  const line = a.kind === 'offering' ? `${first} ${rest.shift()}` : first;
+  return [line, ...rest].join(' · ');
 }
 
 export type Action =

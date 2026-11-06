@@ -89,7 +89,12 @@ export function serviceOpensAt(n: number, settings: Settings): number {
   return zonedToUtc(w.year, w.month - 1, w.day + (n - 1) * 7, w.hour, w.minute, settings.timezone);
 }
 
-/** The latest service that has opened at `now`: 0 before the first one, capped at the total. */
+/** When the doors open with statement 000: one week before service 001. */
+export function doorsOpenAt(settings: Settings): number {
+  return serviceOpensAt(0, settings);
+}
+
+/** The latest service that has opened at `now`: 0 before service 001, capped at the total. */
 export function currentService(now: number, settings: Settings): number {
   const first = Date.parse(settings.firstServiceAt);
   if (now < first) return 0;

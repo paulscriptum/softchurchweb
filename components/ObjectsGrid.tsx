@@ -3,7 +3,7 @@
 import type { ArtifactRecord, Settings } from '@/content/types';
 import { resolveArtifact } from '@/lib/artifact';
 import { pad3 } from '@/lib/format';
-import { currentService, doorsCloseAt, serviceWeekday } from '@/lib/schedule';
+import { currentService, doorsCloseAt, doorsOpenAt, serviceWeekday } from '@/lib/schedule';
 import { useNow } from '@/lib/use-now';
 import { ObjectCard } from './ObjectCard';
 
@@ -11,7 +11,8 @@ function headline(now: number, settings: Settings): string {
   const current = currentService(now, settings);
   const weekday = serviceWeekday(settings);
   if (now >= doorsCloseAt(settings)) return `${settings.totalServices} services · the doors are closed`;
-  if (current === 0) return `service 001 arrives on ${weekday}`;
+  if (now < doorsOpenAt(settings)) return `the doors open on ${weekday} · service 001 a week later`;
+  if (current === 0) return `statement 000 is open · service 001 arrives on ${weekday}`;
   if (current >= settings.totalServices) return `service ${pad3(current)} is open · the last one`;
   return `service ${pad3(current)} is open · the next arrives on ${weekday}`;
 }

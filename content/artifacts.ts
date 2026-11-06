@@ -1,6 +1,6 @@
 import type { ArtifactRecord } from './types';
 
-/** What the site starts with before the admin saves anything. */
+/** What the site starts with before the admin saves anything. Drafts stay off the public site. */
 export const seedArtifacts: ArtifactRecord[] = [
   {
     id: 'godrays',
@@ -14,10 +14,11 @@ export const seedArtifacts: ArtifactRecord[] = [
     tool: 'godrays',
     description:
       'a small instrument for light.\n\nevery visit lets a different light through. move it until it finds you, then keep it as your wallpaper.',
+    draft: true,
   },
   {
     id: 'melting-dot',
-    service: 1,
+    service: 2,
     kind: 'keeping',
     type: 'sign',
     title: 'melting dot',
@@ -25,5 +26,8 @@ export const seedArtifacts: ArtifactRecord[] = [
     alt: 'a white dot melting downward in streaks',
     status: 'auto',
     edition: 333,
+    price: '33 €',
+    href: 'https://manifold.xyz/@softchurch/id/melting-dot',
+    draft: true,
   },
 ];

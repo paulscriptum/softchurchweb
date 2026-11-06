@@ -78,6 +78,7 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
   const [format, setFormat] = useState<Format>('phone');
   const [status, setStatus] = useState('');
   const [failed, setFailed] = useState(false);
+  const [touched, setTouched] = useState(false);
 
   const seed = chosenSeed ?? firstSeed;
   const params = seed === null ? null : paramsFromSeed(seed);
@@ -179,27 +180,64 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
           : 'flex flex-col gap-10'
       }
     >
-      <canvas
-        ref={canvasRef}
-        width={w}
-        height={h}
-        role="img"
-        aria-label={seed === null ? title : `${title}, ${serial(seed)}. arrow keys move the light.`}
-        tabIndex={working ? 0 : -1}
-        onPointerDown={(e) => {
-          dragging.current = true;
-          e.currentTarget.setPointerCapture(e.pointerId);
-          moveTo(e);
-        }}
-        onPointerMove={(e) => dragging.current && moveTo(e)}
-        onPointerUp={() => (dragging.current = false)}
-        onPointerCancel={() => (dragging.current = false)}
-        onKeyDown={nudge}
-        style={{ aspectRatio: `${w} / ${h}` }}
-        className={`block cursor-crosshair touch-none bg-[#1a1817] ${
-          phone ? 'mx-auto h-[min(78svh,820px)] w-auto max-w-full md:mx-0' : 'h-auto w-full'
-        }`}
-      />
+      <div className={`flex flex-col gap-3 ${phone ? 'mx-auto w-fit max-w-full md:mx-0' : 'w-full'}`}>
+        <div className="relative">
+          <canvas
+            ref={canvasRef}
+            width={w}
+            height={h}
+            role="img"
+            aria-label={seed === null ? title : `${title}, ${serial(seed)}. arrow keys move the light.`}
+            tabIndex={working ? 0 : -1}
+            onPointerDown={(e) => {
+              dragging.current = true;
+              setTouched(true);
+              e.currentTarget.setPointerCapture(e.pointerId);
+              moveTo(e);
+            }}
+            onPointerMove={(e) => dragging.current && moveTo(e)}
+            onPointerUp={() => (dragging.current = false)}
+            onPointerCancel={() => (dragging.current = false)}
+            onKeyDown={(e) => {
+              setTouched(true);
+              nudge(e);
+            }}
+            style={{ aspectRatio: `${w} / ${h}` }}
+            className={`block cursor-crosshair touch-none bg-[#1a1817] ${
+              phone ? 'h-[min(68svh,820px)] w-auto max-w-full md:h-[min(78svh,820px)]' : 'h-auto w-full'
+            }`}
+          />
+          {working && seed !== null && (
+            <p
+              aria-hidden="true"
+              className={`pointer-events-none absolute inset-x-0 bottom-6 flex justify-center px-4 transition-opacity duration-700 ${
+                touched ? 'opacity-0' : 'opacity-100'
+              }`}
+            >
+              <span className="rounded-full bg-black/45 px-4 py-2 text-meta text-white/90 backdrop-blur-sm">
+                <span className="pointer-fine:hidden">move your finger across the picture</span>
+                <span className="hidden pointer-fine:inline">drag across the picture</span>
+              </span>
+            </p>
+          )}
+        </div>
+
+        {working && (
+          <div className="flex min-h-11 items-center justify-between gap-4 text-meta">
+            <span className="text-muted">
+              <span className="pointer-fine:hidden">move your finger to move the light</span>
+              <span className="hidden pointer-fine:inline">drag to move the light</span>
+            </span>
+            <button
+              type="button"
+              onClick={another}
+              className="-mr-2 min-h-11 cursor-pointer px-2 text-nav"
+            >
+              another pattern <span aria-hidden="true">↻</span>
+            </button>
+          </div>
+        )}
+      </div>
 
       <div className="flex max-w-[460px] flex-col gap-8 md:sticky md:top-10 md:self-start md:pt-2">
         {intro}
@@ -208,7 +246,9 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
           <div className="flex flex-col gap-6 text-meta">
             <div className="flex flex-col gap-1.5">
               <span className="text-nav tabular-nums">{seed === null ? 'n° ······' : serial(seed)}</span>
-              <span className="text-muted">touch the picture to move the light.</span>
+              <span className="text-muted">
+                every pattern has its own number. move the light, choose a size, then receive it.
+              </span>
             </div>
 
             <div className="flex flex-wrap gap-2" role="group" aria-label="size">
@@ -239,8 +279,8 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
                   {FORMATS[format].width}×{FORMATS[format].height} <span aria-hidden="true">→</span>
                 </span>
               </button>
-              <button type="button" onClick={another} className={row}>
-                <span>another</span>
+              <button type="button" onClick={another} className={`${row} max-md:hidden`}>
+                <span>another pattern</span>
                 <span aria-hidden="true">↻</span>
               </button>
               <p aria-live="polite" className="min-h-[18px] border-t border-line pt-3 text-muted">

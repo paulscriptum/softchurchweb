@@ -13,7 +13,7 @@ interface BlurDotProps {
 
 /** How far the blur reaches past the disc on each side. */
 export function dotBleed(size: number, blurRatio = BRAND_BLUR_RATIO) {
-  return 3 * size * blurRatio;
+  return 3.5 * size * blurRatio;
 }
 
 // The blur is a precomputed gradient mask, not a CSS filter: filters on moving

@@ -3,6 +3,9 @@
 import { useEffect, useRef } from 'react';
 import { BlurDot, dotBleed } from './BlurDot';
 
+// A touch softer than the brand ratio: the old animated blur breathed around this value.
+const HERO_BLUR_RATIO = 0.1;
+
 export function HeroDot({ size }: { size: number }) {
   const ref = useRef<HTMLSpanElement>(null);
 
@@ -38,9 +41,9 @@ export function HeroDot({ size }: { size: number }) {
   // iOS Safari clips animated layers to their own box, so every layer here spans
   // the whole blur and the negative margin gives the space back to the layout.
   return (
-    <span ref={ref} className="hero-dot block" style={{ margin: -dotBleed(size) }}>
+    <span ref={ref} className="hero-dot block" style={{ margin: -dotBleed(size, HERO_BLUR_RATIO) }}>
       <span className="hero-breath block">
-        <BlurDot size={size} bare />
+        <BlurDot size={size} blurRatio={HERO_BLUR_RATIO} bare />
       </span>
     </span>
   );

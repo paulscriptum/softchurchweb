@@ -27,7 +27,8 @@ export function blurredDotGradient(
   const extent = Math.min(canvas.width, canvas.height) / 2;
   const [r, g, b] = hexToRgb(color);
   const stops: string[] = [];
-  for (let k = -3; k <= 3; k += 0.5) {
+  // Dense stops: with sparse ones the linear steps between them show up as rings on dark backgrounds.
+  for (let k = -3.5; k <= 3.5001; k += 0.125) {
     const at = Math.max(0, radius + k * sigma);
     const alpha = 0.5 * (1 - erf(k / Math.SQRT2));
     stops.push(`rgba(${r},${g},${b},${alpha.toFixed(3)}) ${((at / extent) * 100).toFixed(2)}%`);

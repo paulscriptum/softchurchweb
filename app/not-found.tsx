@@ -1,5 +1,8 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { BlurDot } from '@/components/BlurDot';
+
+export const metadata: Metadata = { title: 'nothing is kept here' };
 
 export default function NotFound() {
   return (

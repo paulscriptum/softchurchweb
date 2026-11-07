@@ -6,7 +6,7 @@ import { Silence } from '@/components/Sound';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 export const metadata: Metadata = {
-  title: 'admin · soft.church',
+  title: 'admin',
   robots: { index: false, follow: false },
 };
 

@@ -4,12 +4,14 @@ import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
+import { JsonLd } from '@/components/JsonLd';
 import { ObjectDetail } from '@/components/ObjectDetail';
 import { SITE_NAME } from '@/config/site';
 import { seedArtifacts } from '@/content/artifacts';
 import { isAdmin } from '@/lib/auth';
 import { getSiteData, readSiteData } from '@/lib/data';
 import { objectPath, serviceLine } from '@/lib/artifact';
+import { creativeWorkLd } from '@/lib/structured-data';
 
 export async function generateStaticParams() {
   try {
@@ -25,13 +27,13 @@ export async function generateMetadata({ params }: PageProps<'/objects/[id]'>): 
   const { id } = await params;
   const { artifacts } = await getSiteData();
   const a = artifacts.find((x) => x.id === id);
-  if (!a) return { title: SITE_NAME, robots: { index: false, follow: false } };
+  if (!a) return { title: 'nothing is kept here', robots: { index: false, follow: false } };
 
   const title = `${a.title} · ${SITE_NAME}`;
   const description = a.description?.split(/\n\s*\n/)[0].slice(0, 160) || `${serviceLine(a)} · ${a.alt}`;
   const images = a.image ? [{ url: a.image, width: 600, height: 1300, alt: a.alt }] : undefined;
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: { canonical: objectPath(a) },
     openGraph: { title, description, url: objectPath(a), siteName: SITE_NAME, type: 'article', images },
@@ -43,7 +45,14 @@ async function Detail({ params }: Pick<PageProps<'/objects/[id]'>, 'params'>) {
   const { id } = await params;
   const site = await getSiteData();
   const record = site.artifacts.find((a) => a.id === id);
-  if (record) return <ObjectDetail record={record} settings={site.settings} renderedAt={site.renderedAt} />;
+  if (record) {
+    return (
+      <>
+        <JsonLd data={creativeWorkLd(record, site.settings)} />
+        <ObjectDetail record={record} settings={site.settings} renderedAt={site.renderedAt} />
+      </>
+    );
+  }
 
   const draft = (await isAdmin()) && (await readSiteData()).artifacts.find((a) => a.id === id && a.draft);
   if (!draft) notFound();

@@ -137,6 +137,14 @@ export function formatInstant(instant: number, settings: Settings): string {
     .toLowerCase();
 }
 
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+
+/** `15 nov`, in the site's timezone. */
+export function formatDayMonth(instant: number, settings: Settings): string {
+  const w = wallClock(instant, settings.timezone);
+  return `${w.day} ${MONTHS[w.month - 1]}`;
+}
+
 export function formatRemaining(ms: number): string {
   const { days, hours, minutes } = split(ms);
   return `${days}d ${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m`;

@@ -33,7 +33,8 @@
   --text-base: 16px;
   --text-base--line-height: 1.4;
   --text-lead: 24px;
-  --text-statement: 30px;
+  --text-statement: clamp(19px, 5vw, 23px);
+  --text-statement--line-height: 1.6;
   --text-hero: 36px;
 
   --tracking-tight: -0.015em;
@@ -125,5 +126,10 @@
 
   .js .about-text {
     will-change: opacity, transform;
+  }
+
+  /* words start pale and fill in one by one while their line holds the stage */
+  .js .about-item:not(:first-child) .about-word {
+    opacity: 0.16;
   }
 }

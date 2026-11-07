@@ -3,8 +3,16 @@
 import type { ArtifactRecord, Settings } from '@/content/types';
 import { resolveArtifact } from '@/lib/artifact';
 import { pad3 } from '@/lib/format';
-import { currentService, doorsCloseAt, doorsOpenAt, serviceWeekday } from '@/lib/schedule';
+import {
+  currentService,
+  doorsCloseAt,
+  doorsOpenAt,
+  formatDayMonth,
+  serviceOpensAt,
+  serviceWeekday,
+} from '@/lib/schedule';
 import { useNow } from '@/lib/use-now';
+import { BlurDot } from './BlurDot';
 import { ObjectCard } from './ObjectCard';
 
 function headline(now: number, settings: Settings): string {
@@ -15,6 +23,30 @@ function headline(now: number, settings: Settings): string {
   if (current === 0) return `statement 000 is open · service 001 arrives on ${weekday}`;
   if (current >= settings.totalServices) return `service ${pad3(current)} is open · the last one`;
   return `service ${pad3(current)} is open · the next arrives on ${weekday}`;
+}
+
+// Roughly one row of empty slots at each width, so an empty grid never turns into a tall column.
+const SLOT_VISIBILITY = [
+  'flex',
+  'hidden min-[384px]:flex',
+  'hidden sm:flex',
+  'hidden md:flex',
+  'hidden lg:flex',
+  'hidden xl:flex',
+];
+
+function EmptySlot({ service, date, className }: { service: number; date: string; className: string }) {
+  return (
+    <div aria-hidden="true" className={`min-w-0 flex-col gap-3.5 ${className}`}>
+      <div className="flex aspect-[6/13] w-full items-center justify-center border border-line text-muted">
+        <BlurDot size={6} blurRatio={1 / 6} className="opacity-50" />
+      </div>
+      <div className="flex flex-col gap-[3px] text-meta text-muted">
+        <span>service {pad3(service)}</span>
+        <span>{date}</span>
+      </div>
+    </div>
+  );
 }
 
 export function ObjectsGrid({
@@ -41,9 +73,21 @@ export function ObjectsGrid({
         <span className="text-muted">{headline(now, settings)}</span>
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-x-7 gap-y-12">
-        {artifacts.map((record) => (
-          <ObjectCard key={record.id} artifact={resolveArtifact(record, now, settings)} />
-        ))}
+        {artifacts.length > 0
+          ? artifacts.map((record) => (
+              <ObjectCard key={record.id} artifact={resolveArtifact(record, now, settings)} />
+            ))
+          : SLOT_VISIBILITY.map((visibility, i) => {
+              const service = Math.max(1, currentService(now, settings)) + i;
+              return (
+                <EmptySlot
+                  key={i}
+                  service={service}
+                  date={formatDayMonth(serviceOpensAt(service, settings), settings)}
+                  className={visibility}
+                />
+              );
+            })}
       </div>
     </section>
   );

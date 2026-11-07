@@ -68,4 +68,6 @@ export interface Thesis {
   number: number;
   title: string;
   body: string;
+  /** Scripture reference: Orthodox (Septuagint) numbering, western numbering in brackets where it differs. */
+  reference: string;
 }

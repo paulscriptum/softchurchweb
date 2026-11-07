@@ -17,13 +17,17 @@ export function Manifesto({ manifesto }: { manifesto: typeof ManifestoData }) {
         <div key={t.number}>
           <h3 className="mb-1.5 font-normal">{`${t.number}. ${t.title}`}</h3>
           <p className="text-body">{t.body}</p>
+          <p className="mt-1.5 text-meta text-muted lowercase">{t.reference}</p>
         </div>
       ))}
-      <p>
-        {manifesto.closing[0]}
-        <br />
-        {manifesto.closing[1]}
-      </p>
+      <div>
+        <p>
+          {manifesto.closing[0]}
+          <br />
+          {manifesto.closing[1]}
+        </p>
+        <p className="mt-10 text-meta text-muted lowercase">{manifesto.referencesNote}</p>
+      </div>
     </section>
   );
 }

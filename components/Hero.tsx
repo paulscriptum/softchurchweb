@@ -9,7 +9,7 @@ export function Hero({ settings, renderedAt }: { settings: Settings; renderedAt:
       className="flex min-h-[740px] overflow-x-clip flex-col items-center justify-center gap-14 px-6 pt-[104px] sm:min-h-[780px] sm:pt-[136px] pb-14 text-center"
     >
       <HeroDot size={260} />
-      <h1 className="relative max-w-manifesto text-hero leading-[1.15] font-light tracking-tighter">
+      <h1 className="relative max-w-manifesto text-hero leading-[1.15] font-normal text-body tracking-[-0.025em]">
         everything is given. some of it is kept.
       </h1>
       <div className="flex flex-col gap-1.5 self-stretch text-meta text-muted">

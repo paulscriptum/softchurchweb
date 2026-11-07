@@ -28,9 +28,14 @@ function paragraph(text: string): string {
 }
 
 function frame(body: string, footer: string): string {
-  return `<!doctype html><html><body style="margin:0;background:#fafaf8">
+  // A table keeps the dot and the wordmark on one row in Gmail and Outlook; the own <a>
+  // stops Gmail from auto-linking "soft.church" in blue.
+  return `<!doctype html><html><head><meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light only"></head><body style="margin:0;background:#fafaf8">
 <div style="max-width:520px;margin:0 auto;padding:48px 24px;font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:1.6;color:#2e2b2a">
-<a href="${SITE_URL}" style="display:block;width:64px;margin:0 0 32px"><img src="${MARK_URL}" width="64" height="64" alt="soft.church, a soft blurred dot" style="display:block;width:64px;height:64px;border:0;border-radius:16px"></a>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin:0 0 36px"><tr>
+<td valign="middle" style="padding:0 12px 0 0;line-height:0"><a href="${SITE_URL}"><img src="${MARK_URL}" width="40" height="40" alt="a soft blurred dot" style="display:block;width:40px;height:40px;border:0;border-radius:10px"></a></td>
+<td valign="middle" style="font-size:15px;line-height:20px;letter-spacing:-0.01em"><a href="${SITE_URL}" style="color:#121010;text-decoration:none">soft.church</a></td>
+</tr></table>
 ${body}
 <p style="margin:40px 0 0;font-size:13px;color:#6b6872">${footer}</p>
 </div></body></html>`;

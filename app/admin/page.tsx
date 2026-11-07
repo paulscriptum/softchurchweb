@@ -18,9 +18,30 @@ import {
 } from '@/lib/schedule';
 import { usesBlobData, usesBlobMedia } from '@/lib/store';
 
-const requestTime = () => Date.now();
-import { listWitnesses, providerName } from '@/lib/witness';
+import { letterFrom, resendConfigured } from '@/lib/resend';
+import { listWitnesses } from '@/lib/witness';
+import { SITE_URL } from '@/config/site';
+import { LetterForm } from '@/components/admin/LetterForm';
+import type { ArtifactRecord } from '@/content/types';
 import { logout } from './actions';
+
+const requestTime = () => Date.now();
+
+/** A starting point for the letter of the service that is open now. */
+function draftLetter(current: number, artifacts: ArtifactRecord[]) {
+  if (current === 0) {
+    return { subject: 'statement 000 is open.', body: `the doors are open.\n\n${SITE_URL}/#manifesto` };
+  }
+  const open = artifacts.filter((a) => a.service === current && !a.draft);
+  const titles = open.map((a) => a.title);
+  const cover = open.find((a) => a.image);
+  return {
+    image: cover?.image,
+    imageAlt: cover ? cover.alt || cover.title : undefined,
+    subject: `service ${pad3(current)} is open.`,
+    body: `${titles.length ? `${titles.join(', ')}.` : 'something new is given.'}\n\n${SITE_URL}/#objects`,
+  };
+}
 
 async function Dashboard({ searchParams }: { searchParams: PageProps<'/admin'>['searchParams'] }) {
   await connection();
@@ -50,7 +71,8 @@ async function Dashboard({ searchParams }: { searchParams: PageProps<'/admin'>['
   const nextAt = serviceOpensAt(next, settings);
   const opensAt = doorsOpenAt(settings);
   const services = [...new Set(artifacts.map((a) => a.service))].sort((a, b) => a - b);
-  const provider = providerName();
+  const confirmed = witnesses.filter((w) => w.confirmedAt).length;
+  const letter = draftLetter(current, artifacts);
   const drafts = artifacts.filter((a) => a.draft).length;
 
   return (
@@ -152,16 +174,19 @@ async function Dashboard({ searchParams }: { searchParams: PageProps<'/admin'>['
       <section aria-labelledby="witnesses-admin" className={panelClass}>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <h2 id="witnesses-admin" className="text-meta font-normal">
-            witnesses · {witnesses.length}
+            witnesses · {confirmed}
+            {witnesses.length > confirmed && (
+              <span className="text-muted"> · {witnesses.length - confirmed} not confirmed yet</span>
+            )}
           </h2>
           <a href="/admin/witnesses.csv" className={ghostButtonClass + ' inline-flex items-center'}>
             download as csv
           </a>
         </div>
         <p className="text-meta text-muted">
-          {provider
-            ? `also passed on to ${provider}.`
-            : 'kept here only. set BUTTONDOWN_API_KEY, or RESEND_API_KEY with RESEND_AUDIENCE_ID, to pass them on.'}
+          {resendConfigured()
+            ? `letters go out through resend from ${letterFrom()}. those who leave are handled by resend.`
+            : 'resend is not connected. set RESEND_API_KEY; until then letters are only written to the server log.'}
         </p>
         <ul className="flex flex-col text-nav">
           {witnesses
@@ -169,11 +194,20 @@ async function Dashboard({ searchParams }: { searchParams: PageProps<'/admin'>['
             .reverse()
             .map((w) => (
               <li key={w.email} className="flex min-h-11 items-center justify-between gap-4 border-t border-line">
-                <span className="truncate">{w.email}</span>
-                <span className="text-meta text-muted">{w.at.slice(0, 10)}</span>
+                <span className={`truncate ${w.confirmedAt ? '' : 'text-muted'}`}>{w.email}</span>
+                <span className="text-meta text-muted">
+                  {w.confirmedAt ? w.confirmedAt.slice(0, 10) : 'waiting'}
+                </span>
               </li>
             ))}
         </ul>
+      </section>
+
+      <section aria-labelledby="letter-admin" className={panelClass}>
+        <h2 id="letter-admin" className="text-meta font-normal">
+          the letter · to {confirmed} {confirmed === 1 ? 'witness' : 'witnesses'}
+        </h2>
+        <LetterForm {...letter} />
       </section>
     </>
   );

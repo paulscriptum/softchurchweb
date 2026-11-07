@@ -7,7 +7,7 @@ type State = 'idle' | 'sending' | 'received' | 'error';
 const messages: Record<State, string> = {
   idle: '',
   sending: '',
-  received: 'received.',
+  received: 'almost. a letter is on its way to confirm.',
   error: 'try again.',
 };
 

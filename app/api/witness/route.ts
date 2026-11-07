@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { publicOrigin } from '@/lib/origin';
 import { isEmail, subscribe } from '@/lib/witness';
 
 async function readEmail(request: Request): Promise<unknown> {
@@ -18,17 +19,18 @@ export async function POST(request: Request) {
 
   if (!isEmail(email)) {
     return fromForm
-      ? NextResponse.redirect(new URL('/#witness', request.url), 303)
+      ? NextResponse.redirect(new URL('/#witness', publicOrigin(request)), 303)
       : NextResponse.json({ ok: false }, { status: 400 });
   }
 
   try {
-    await subscribe(email);
-  } catch {
+    await subscribe(email, publicOrigin(request));
+  } catch (error) {
+    console.error('[witness] subscribe failed', error);
     return NextResponse.json({ ok: false }, { status: 502 });
   }
 
   return fromForm
-    ? NextResponse.redirect(new URL('/#witness', request.url), 303)
+    ? NextResponse.redirect(new URL('/#witness', publicOrigin(request)), 303)
     : NextResponse.json({ ok: true });
 }

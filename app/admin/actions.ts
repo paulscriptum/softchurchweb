@@ -15,7 +15,10 @@ import {
 } from '@/content/types';
 import { checkPassword, endSession, requireAdmin, startSession } from '@/lib/auth';
 import { SITE_TAG, readSiteData, writeSiteData } from '@/lib/data';
+import { broadcastLetter } from '@/lib/letters';
+import { resendConfigured, sendBroadcast, sendEmail } from '@/lib/resend';
 import { zonedToUtc } from '@/lib/schedule';
+import { isEmail } from '@/lib/witness';
 import { StorageUnavailableError, deleteMedia } from '@/lib/store';
 
 export interface FormState {
@@ -171,6 +174,38 @@ export async function saveArtifact(_: FormState, fd: FormData): Promise<FormStat
 
   updateTag(SITE_TAG);
   redirect(`/admin?saved=${parsed.draft ? 'draft' : 'published'}`);
+}
+
+export async function sendLetter(_: FormState, fd: FormData): Promise<FormState> {
+  await requireAdmin();
+  const subject = text(fd, 'subject').toLowerCase();
+  const body = text(fd, 'body').replace(/\r\n/g, '\n');
+  const intent = text(fd, 'intent');
+  if (!subject || !body) return { message: 'a letter needs a subject and a few words.' };
+
+  const imageSrc = text(fd, 'image');
+  if (imageSrc && !imageSrc.startsWith('/') && !/^https:\/\//.test(imageSrc)) {
+    return { message: 'the image must start with https:// or /.' };
+  }
+  const image = imageSrc ? { src: imageSrc, alt: text(fd, 'imageAlt').toLowerCase() } : undefined;
+  const letter = broadcastLetter(subject, body, image);
+  try {
+    if (intent === 'test') {
+      const to = text(fd, 'testTo').toLowerCase();
+      if (!isEmail(to)) return { message: 'a test needs an address.' };
+      await sendEmail({ to, ...letter, subject: `[test] ${letter.subject}` });
+      return { ok: true, message: resendConfigured() ? `a test went to ${to}.` : 'no resend key yet. the test was only logged.' };
+    }
+    if (text(fd, 'sure') !== 'yes') return { message: 'tick the box first. this goes to every witness.' };
+    await sendBroadcast({ ...letter, name: subject });
+  } catch (error) {
+    console.error(error);
+    return { message: 'resend did not take it. try again in a moment.' };
+  }
+  return {
+    ok: true,
+    message: resendConfigured() ? 'sent to every witness.' : 'no resend key yet. the letter was only logged.',
+  };
 }
 
 export async function deleteArtifact(fd: FormData): Promise<void> {

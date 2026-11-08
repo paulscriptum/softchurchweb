@@ -68,7 +68,7 @@ export async function saveSettings(_: FormState, fd: FormData): Promise<FormStat
     return { message: 'the first service needs a date and a time.' };
   }
   if (!Number.isInteger(totalServices) || totalServices < 1 || totalServices > 999) {
-    return { message: 'total services must be between 1 and 999.' };
+    return { message: 'services in this volume must be between 1 and 999.' };
   }
 
   try {

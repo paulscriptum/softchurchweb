@@ -54,6 +54,7 @@ export interface Settings {
    */
   firstServiceAt: string;
   timezone: string;
+  /** How many services this volume holds. Volume i is 33; then the doors close. */
   totalServices: number;
   instagram: string;
   archive: string;

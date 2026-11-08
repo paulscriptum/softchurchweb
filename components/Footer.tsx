@@ -26,7 +26,7 @@ export function Footer({ settings }: { settings: Settings }) {
         </div>
         <div className="flex flex-wrap justify-between gap-x-6 gap-y-2 text-meta text-muted">
           <span>received with gratitude.</span>
-          <span>{settings.totalServices}</span>
+          <span>volume i</span>
           <span>
             © {COPYRIGHT_YEAR} {SITE_NAME}
           </span>

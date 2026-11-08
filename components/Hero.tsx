@@ -10,7 +10,9 @@ export function Hero({ settings, renderedAt }: { settings: Settings; renderedAt:
     >
       <HeroDot size={260} />
       <h1 className="relative max-w-manifesto text-hero leading-[1.15] font-normal text-body tracking-[-0.025em]">
-        everything is given. some of it is kept.
+        everything is given.
+        <br />
+        some of it is kept.
       </h1>
       <div className="flex flex-col gap-1.5 self-stretch text-meta text-muted">
         <HeroMeta settings={settings} renderedAt={renderedAt} />

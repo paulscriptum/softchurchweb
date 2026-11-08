@@ -3,7 +3,7 @@ import type { Settings } from '@/content/types';
 export const SITE_NAME = 'soft.church';
 export const SITE_URL = 'https://soft.church';
 export const SITE_DESCRIPTION =
-  'a quiet house for given things. one service every seventh day. 333 in total.';
+  'a quiet house for given things. one service every seventh day. volume i, 33 objects.';
 
 export const COPYRIGHT_YEAR = 2026;
 export const INSTAGRAM_HANDLE = '@soft.church';
@@ -17,7 +17,8 @@ export const CURATOR_URL = 'https://shchepochk.in/';
 export const DEFAULT_SETTINGS: Settings = {
   firstServiceAt: '2026-11-15T14:33:00.000Z',
   timezone: 'Europe/Berlin',
-  totalServices: 333,
+  // volume i: 33 objects, then the doors close. volume ii may open later.
+  totalServices: 33,
   instagram: 'https://instagram.com/soft.church',
   archive: 'https://333objects.com',
 };

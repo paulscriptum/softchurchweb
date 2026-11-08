@@ -61,7 +61,7 @@ export const manifesto = {
     {
       number: 9,
       title: 'everything ends.',
-      body: 'three hundred thirty-three services. one every seventh day. then the doors close. the ending is what gives each artifact its weight.',
+      body: 'volume i. thirty-three objects. one every seventh day. then the doors close. volume ii may open later. the ending is what gives each artifact its weight.',
       reference: 'ecclesiastes 3:1',
     },
     {

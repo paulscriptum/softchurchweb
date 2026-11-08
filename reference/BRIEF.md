@@ -14,7 +14,7 @@ soft.church is a niche brand and community: *a quiet house for given things*.
   - **offering** — free, available for seven days (e.g. a phone wallpaper to download);
   - **keeping** — a paid edition in a meaningful number (333, 33, 12 or 3);
   - **relic** — a 1/1, sold by auction.
-- There will be exactly 333 services. Then the project closes ("the doors close").
+- Volume i plans 33 objects. Then the doors close. Volume ii may open later.
 - Artifact types: **sign** (image), **psalm** (ambient mix), **instrument** (small software tool), **object** (physical item, later).
 - The brand speaks about God through gratitude and presence, never by preaching. The tone is quiet, short and declarative.
 - The community lives on Instagram (@soft.church) and on this site.
@@ -24,11 +24,11 @@ soft.church is a niche brand and community: *a quiet house for given things*.
 Build a one-page landing site with these sections, in this order, exactly as in the reference:
 
 1. **header**: logo `soft·church` (the dot is the brand mark, see 6.1); nav anchors: about, objects, manifesto, witness.
-2. **hero**: large blurred dot, the line "everything is given. some of it is kept.", meta "service 001/333 · the seventh day", and a countdown (see 6.3).
+2. **hero**: large blurred dot, the two lines "everything is given." / "some of it is kept.", meta "service 001/033 · the seventh day", and a countdown (see 6.3).
 3. **about**: five statements, one per screen, revealed softly on scroll (see 6.4).
 4. **objects**: dense grid of artifacts with service number, kind, title, meta line and an action (receive / keep / bid / upcoming).
-5. **manifesto**: "statement 000", theses 0–10, ending "amen. 333". Copy is final; keep it verbatim.
-6. **footer**: "become a witness" email signup, links (instagram, the archive, statement 000), and the bottom line "received with gratitude. · 333 · © 2026 soft.church".
+5. **manifesto**: "statement 000", theses 0–10, ending "amen. 333". Thesis 9 names volume i (33 objects) and that volume ii may open later; the amen stays 333.
+6. **footer**: "become a witness" email signup, links (instagram, the archive, statement 000), and the bottom line "received with gratitude. · volume i · © 2026 soft.church".
 
 ## 3. Stack
 
@@ -74,7 +74,7 @@ type Status = 'open' | 'upcoming' | 'kept' | 'closed';
 
 interface Artifact {
   id: string;            // e.g. 'melting-dot'
-  service: number;       // 1..333
+  service: number;       // 1..33 in volume i
   kind: Kind;
   type: ArtifactType;
   title: string;         // lowercase
@@ -94,7 +94,7 @@ Seed `content/artifacts.ts` with the six artifacts from the reference.
 
 Display rules (derive them, don't hardcode per card):
 
-- Numbers are always zero-padded to three digits: `service 001`, `001/333`.
+- Numbers are always zero-padded to three digits: `service 001`, `001/033`.
 - Line 1: `service {nnn} · {kind}`.
 - Line 2: title.
 - Line 3:
@@ -150,7 +150,7 @@ Display rules (derive them, don't hardcode per card):
 
 ## 8. Meta and SEO
 
-- Title `soft.church`. Description: `a quiet house for given things. one service every seventh day. 333 in total.`
+- Title `soft.church`. Description: `a quiet house for given things. one service every seventh day. volume i, 33 objects.`
 - OG image 1200×630: a blurred dot centered on `--bg`. Generate it with `next/og`.
 - Favicon and app icon: a **compact** dot. Use a bigger dot and lighter blur (about 4% of diameter), because the full blur turns to grey mush at 16px. Provide light and dark variants.
 - `lang="en"`, semantic landmarks (`header`, `nav`, `main`, `section` with labels, `footer`).

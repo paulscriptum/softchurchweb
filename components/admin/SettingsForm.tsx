@@ -39,7 +39,7 @@ export function SettingsForm({ settings }: { settings: Settings }) {
         <input name="timezone" required defaultValue={settings.timezone} className={inputClass} />
       </label>
       <label className={labelClass}>
-        services in total
+        services in this volume
         <input
           name="totalServices"
           type="number"

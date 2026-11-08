@@ -53,9 +53,12 @@ export function Manifesto({ manifesto }: { manifesto: typeof ManifestoData }) {
       ))}
       <div>
         <p>
-          {manifesto.closing[0]}
-          <br />
-          {manifesto.closing[1]}
+          {manifesto.closing.map((line, i) => (
+            <span key={line}>
+              {i > 0 ? <br /> : null}
+              {line}
+            </span>
+          ))}
         </p>
         <p className="mt-10 text-meta text-muted lowercase">{manifesto.referencesNote}</p>
         <p className="mt-6 text-meta text-muted">{manifesto.identity}</p>

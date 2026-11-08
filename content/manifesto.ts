@@ -24,7 +24,7 @@ export const manifesto = {
     {
       number: 2,
       title: 'an artifact is a witness.',
-      body: "every object here is proof that something happened to someone. we don't sell things. we pass on evidence.",
+      body: 'every object here is proof that something happened to someone. what we pass on is evidence.',
       reference: 'isaiah 30:8',
       verse:
         'go, write it before them on a tablet, and inscribe it in a book, that it may be for the time to come as a witness forever.',
@@ -50,20 +50,16 @@ export const manifesto = {
       number: 6,
       title: 'we speak our own language.',
       body: 'brands wore the old words out. so we made new ones. the words arrive with the objects.',
-      reference: 'revelation 21:5',
-      verse: 'behold, i make all things new.',
     },
     {
       number: 7,
       title: 'made with friends.',
       body: 'artists, musicians, people who write code at night. every guest brings a world. this is a shared house.',
-      reference: 'matthew 18:20',
-      verse: 'for where two or three are gathered together in my name, there am i in the midst of them.',
     },
     {
       number: 8,
-      title: 'a tool can be a prayer.',
-      body: 'a small piece of software can hold attention like a candle. we make instruments for listening, waiting, wondering.',
+      title: 'a tool can be quiet.',
+      body: 'a small piece of software can hold attention. we make instruments for listening, waiting, wondering.',
     },
     {
       number: 9,
@@ -80,6 +76,6 @@ export const manifesto = {
       verse: 'be still, and know that i am God.',
     },
   ] satisfies Thesis[],
-  closing: ['amen.', '333'],
+  closing: ['333'],
   referencesNote: 'first number: orthodox bible. in brackets: western bibles.',
 };

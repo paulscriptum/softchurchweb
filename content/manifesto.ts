@@ -18,9 +18,6 @@ export const manifesto = {
       number: 1,
       title: 'God is everywhere.',
       body: 'a field and a feed. a stone, a sound, a forgotten page. none of these is outside his presence. we keep the traces, in pixels and in matter.',
-      reference: 'psalm 120:1–2 (121:1–2)',
-      verse:
-        'i will lift up mine eyes unto the hills, from whence cometh my help. my help cometh from the Lord, which made heaven and earth.',
     },
     {
       number: 2,

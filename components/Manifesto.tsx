@@ -57,8 +57,8 @@ export function Manifesto({ manifesto }: { manifesto: typeof ManifestoData }) {
           <br />
           {manifesto.closing[1]}
         </p>
-        <p className="mt-10 text-meta text-muted">{manifesto.identity}</p>
-        <p className="mt-6 text-meta text-muted lowercase">{manifesto.referencesNote}</p>
+        <p className="mt-10 text-meta text-muted lowercase">{manifesto.referencesNote}</p>
+        <p className="mt-6 text-meta text-muted">{manifesto.identity}</p>
       </div>
     </section>
   );

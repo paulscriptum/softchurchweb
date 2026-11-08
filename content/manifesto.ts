@@ -4,7 +4,7 @@ export const manifesto = {
   label: 'soft.church · statement 000',
   lead: 'a quiet house for given things.',
   identity:
-    'soft.church is an independent artistic project rooted in personal christian faith. it is not a religious institution, but a space for exploring creativity, attention, and the beauty of creation.',
+    'soft.church is an independent artistic project. some religious references are rooted in personal christian faith. it is not a religious institution, but a space for exploring creativity, attention, and the beauty of creation.',
   theses: [
     {
       number: 0,

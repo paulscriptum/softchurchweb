@@ -60,7 +60,7 @@ export const manifesto = {
     {
       number: 8,
       title: 'a tool can be quiet.',
-      body: 'a small piece of software can hold attention. we make instruments for listening, waiting, wondering.',
+      body: 'a small piece of software can hold attention, like a candle. we make instruments for listening, waiting, wondering.',
     },
     {
       number: 9,

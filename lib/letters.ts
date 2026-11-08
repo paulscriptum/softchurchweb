@@ -43,7 +43,7 @@ ${body}
 
 export function confirmLetter(link: string) {
   const lines = [
-    'someone, maybe you, asked to become a witness of soft.church.',
+    'someone, maybe you, asked to become a witness.',
     'one letter every seventh day. nothing else.',
   ];
   return {

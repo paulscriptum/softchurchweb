@@ -3,7 +3,7 @@ import type { Settings } from '@/content/types';
 export const SITE_NAME = 'soft.church';
 export const SITE_URL = 'https://soft.church';
 export const SITE_DESCRIPTION =
-  'a quiet house for given things. one service every seventh day. volume i, 33 objects.';
+  'a quiet house for given things. an artistic project. one service every seventh day. volume i, 33 objects.';
 
 export const COPYRIGHT_YEAR = 2026;
 export const INSTAGRAM_HANDLE = '@soft.church';

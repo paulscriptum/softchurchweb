@@ -70,5 +70,7 @@ export interface Thesis {
   title: string;
   body: string;
   /** Scripture reference: Orthodox (Septuagint) numbering, western numbering in brackets where it differs. */
-  reference: string;
+  reference?: string;
+  /** The cited verse, shown on hover and focus. */
+  verse?: string;
 }

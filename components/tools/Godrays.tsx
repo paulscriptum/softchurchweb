@@ -215,8 +215,8 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
               }`}
             >
               <span className="rounded-full bg-black/45 px-4 py-2 text-meta text-white/90 backdrop-blur-sm">
-                <span className="pointer-fine:hidden">move your finger across the picture</span>
-                <span className="hidden pointer-fine:inline">drag across the picture</span>
+                <span className="md:hidden">move your finger across the picture</span>
+                <span className="hidden md:inline">drag across the picture</span>
               </span>
             </p>
           )}
@@ -225,8 +225,8 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
         {working && (
           <div className="flex min-h-11 items-center justify-between gap-4 text-meta">
             <span className="text-muted">
-              <span className="pointer-fine:hidden">move your finger to move the light</span>
-              <span className="hidden pointer-fine:inline">drag to move the light</span>
+              <span className="md:hidden">move your finger to move the light</span>
+              <span className="hidden md:inline">drag to move the light</span>
             </span>
             <button
               type="button"

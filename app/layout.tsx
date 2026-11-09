@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { CURATOR_NAME, CURATOR_URL, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/config/site';
 import { SiteAnalytics } from '@/components/SiteAnalytics';
+import { ViaMemory } from '@/components/ViaMemory';
 import { SoundProvider } from '@/components/Sound';
 import { ThemeScript } from '@/components/ThemeScript';
 import { brandFont } from './fonts';
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       </head>
       <body className="antialiased">
         <SoundProvider>{children}</SoundProvider>
+        <ViaMemory />
         <SiteAnalytics />
       </body>
     </html>

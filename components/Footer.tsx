@@ -29,6 +29,10 @@ export function Footer({ settings }: { settings: Settings }) {
           <span>volume i</span>
           <span>
             © {COPYRIGHT_YEAR} {SITE_NAME}
+            {' · '}
+            <Link href="/imprint">imprint</Link>
+            {' · '}
+            <Link href="/privacy">privacy</Link>
           </span>
         </div>
       </div>

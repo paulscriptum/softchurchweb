@@ -14,7 +14,7 @@ export const seedArtifacts: ArtifactRecord[] = [
     tool: 'godrays',
     description:
       'a small instrument for light.\n\nevery visit lets a different light through. move it until it finds you, then keep it as your wallpaper.',
-    draft: true,
+    draft: false,
   },
   {
     id: 'melting-dot',

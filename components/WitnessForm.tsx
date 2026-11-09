@@ -1,6 +1,8 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
+import { VIA_KEY, readVia } from '@/lib/via';
 
 type State = 'idle' | 'sending' | 'received' | 'error';
 
@@ -17,12 +19,13 @@ export function WitnessForm() {
     event.preventDefault();
     const form = event.currentTarget;
     const email = new FormData(form).get('email');
+    const via = readVia(sessionStorage.getItem(VIA_KEY));
     setState('sending');
     try {
       const res = await fetch('/api/witness', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify(via ? { email, via } : { email }),
       });
       if (!res.ok) throw new Error(String(res.status));
       form.reset();
@@ -72,6 +75,12 @@ export function WitnessForm() {
           witness
         </button>
       </div>
+      <p className="text-meta text-muted">
+        one letter every seventh day. unsubscribe anytime.{' '}
+        <Link href="/privacy" className="underline decoration-line decoration-from-font underline-offset-2">
+          privacy
+        </Link>
+      </p>
       <p aria-live="polite" className="min-h-[18px] text-meta text-muted">
         {messages[state]}
       </p>

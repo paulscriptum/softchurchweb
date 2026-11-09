@@ -1,19 +1,21 @@
 import { NextResponse } from 'next/server';
 import { publicOrigin } from '@/lib/origin';
+import { readVia } from '@/lib/via';
 import { isEmail, subscribe } from '@/lib/witness';
 
-async function readEmail(request: Request): Promise<unknown> {
+async function readSubmission(request: Request): Promise<{ email: unknown; via: unknown }> {
   const type = request.headers.get('content-type') ?? '';
   if (type.includes('application/json')) {
     const body = await request.json().catch(() => null);
-    return body?.email;
+    return { email: body?.email, via: body?.via };
   }
   const form = await request.formData().catch(() => null);
-  return form?.get('email');
+  return { email: form?.get('email'), via: form?.get('via') };
 }
 
 export async function POST(request: Request) {
-  const raw = await readEmail(request);
+  const submission = await readSubmission(request);
+  const raw = submission.email;
   const email = typeof raw === 'string' ? raw.trim().toLowerCase() : raw;
   const fromForm = !(request.headers.get('content-type') ?? '').includes('application/json');
 
@@ -24,7 +26,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    await subscribe(email, publicOrigin(request));
+    await subscribe(email, publicOrigin(request), readVia(submission.via));
   } catch (error) {
     console.error('[witness] subscribe failed', error);
     return NextResponse.json({ ok: false }, { status: 502 });

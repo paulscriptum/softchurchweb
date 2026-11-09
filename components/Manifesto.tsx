@@ -1,5 +1,36 @@
 import type { manifesto as ManifestoData } from '@/content/manifesto';
 
+const dictionary = [
+  ['service', 'one appearance, every seventh day.'],
+  ['the seventh day', 'sunday. the day of service.'],
+  ['given', 'an object free to receive for seven days.'],
+  ['relic', 'a single object. it leaves by auction.'],
+  ['keeper', 'one who holds an object.'],
+  ['witness', 'one who watches. not a keeper yet.'],
+  ['guest', 'an invited artist.'],
+  ['sign', 'an image, a print, a painting.'],
+  ['instrument', 'a small piece of software.'],
+  ['object', 'a thing you can touch.'],
+  ['the archive', 'every service that has passed.'],
+  ['volume', 'thirty-three services. then the doors close.'],
+] as const;
+
+function Dictionary() {
+  return (
+    <details className="mt-6">
+      <summary className="cursor-pointer text-meta text-muted">a small dictionary</summary>
+      <dl className="mt-6 grid grid-cols-1 gap-x-10 gap-y-5 sm:grid-cols-2">
+        {dictionary.map(([term, definition]) => (
+          <div key={term}>
+            <dt className="font-normal">{term}</dt>
+            <dd className="mt-1 text-meta leading-[1.45] text-muted">{definition}</dd>
+          </div>
+        ))}
+      </dl>
+    </details>
+  );
+}
+
 function ScriptureRef({
   id,
   reference,
@@ -46,6 +77,7 @@ export function Manifesto({ manifesto }: { manifesto: typeof ManifestoData }) {
         <div key={t.number}>
           <h3 className="mb-1.5 font-normal">{`${t.number}. ${t.title}`}</h3>
           <p className="text-body">{t.body}</p>
+          {t.number === 6 ? <Dictionary /> : null}
           {t.reference && t.verse && (
             <ScriptureRef id={`verse-${t.number}`} reference={t.reference} verse={t.verse} />
           )}

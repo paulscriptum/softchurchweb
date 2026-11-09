@@ -97,6 +97,13 @@
     height: calc(var(--count) * 100svh);
   }
 
+  /* five full screens bury the next section on a phone; two is enough to reach it */
+  @media (max-width: 639px) {
+    .js .about-track {
+      height: 200svh;
+    }
+  }
+
   .js .about-stage {
     position: sticky;
     top: 0;

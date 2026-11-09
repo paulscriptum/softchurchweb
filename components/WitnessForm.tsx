@@ -4,10 +4,9 @@ import { useState, type FormEvent } from 'react';
 
 type State = 'idle' | 'sending' | 'received' | 'error';
 
-const messages: Record<State, string> = {
+const messages: Record<Exclude<State, 'received'>, string> = {
   idle: '',
   sending: '',
-  received: 'almost. a letter is on its way to confirm.',
   error: 'try again.',
 };
 
@@ -31,6 +30,15 @@ export function WitnessForm() {
     } catch {
       setState('error');
     }
+  }
+
+  if (state === 'received') {
+    return (
+      <div role="status" className="flex max-w-[460px] flex-[1_1_320px] flex-col gap-1.5">
+        <p className="text-lead font-light tracking-tight">you are a witness now.</p>
+        <p className="text-meta text-muted">the first letter comes on sunday.</p>
+      </div>
+    );
   }
 
   return (

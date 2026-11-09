@@ -5,6 +5,7 @@ import { ThemeToggle } from './ThemeToggle';
 
 const nav = [
   { id: 'about', label: 'about' },
+  { id: 'how', label: 'how' },
   { id: 'objects', label: 'objects' },
   { id: 'manifesto', label: 'manifesto' },
   { id: 'witness', label: 'witness' },

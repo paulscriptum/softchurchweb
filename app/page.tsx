@@ -5,6 +5,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { Manifesto } from '@/components/Manifesto';
 import { ObjectsGrid } from '@/components/ObjectsGrid';
 import { Statements } from '@/components/Statements';
+import { WitnessBlock } from '@/components/WitnessBlock';
 import { getManifesto, getSiteData, getStatements } from '@/lib/data';
 import { siteLd } from '@/lib/structured-data';
 
@@ -27,6 +28,7 @@ export default async function Home() {
           settings={site.settings}
           renderedAt={site.renderedAt}
         />
+        <WitnessBlock />
         <Manifesto manifesto={manifesto} />
       </main>
       <Footer settings={site.settings} />

@@ -7,6 +7,7 @@ import { Header } from '@/components/Header';
 import { JsonLd } from '@/components/JsonLd';
 import { ObjectDetail } from '@/components/ObjectDetail';
 import { SITE_NAME } from '@/config/site';
+import { seedArtifacts } from '@/content/artifacts';
 import type { ArtifactRecord } from '@/content/types';
 import { objectPath, serviceLine } from '@/lib/artifact';
 import { getSiteData } from '@/lib/data';
@@ -22,8 +23,14 @@ async function published(number: string): Promise<ArtifactRecord | undefined> {
 }
 
 export async function generateStaticParams() {
-  const { artifacts } = await getSiteData();
-  return artifacts.map((artifact) => ({ number: pad3(artifact.service) }));
+  try {
+    const { artifacts } = await getSiteData();
+    // Cache Components rejects an empty list. The saved catalog can be all drafts.
+    if (artifacts.length > 0) return artifacts.map((artifact) => ({ number: pad3(artifact.service) }));
+  } catch {
+    // storage may be out of reach while building
+  }
+  return seedArtifacts.map((artifact) => ({ number: pad3(artifact.service) }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

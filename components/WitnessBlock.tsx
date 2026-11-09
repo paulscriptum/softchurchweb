@@ -66,10 +66,10 @@ export function WitnessBlock() {
     >
       <div>
         <h2 id="stay-title" className="text-meta font-normal">
-          witness
+          become a witness
         </h2>
         <p className="mt-1.5 text-lead leading-[1.25] tracking-tight">
-          stay. witness what is set down next.
+          one letter every seventh day. one object. nothing else.
         </p>
       </div>
       <form

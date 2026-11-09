@@ -87,17 +87,20 @@ export function ObjectDetail({
   record,
   settings,
   renderedAt,
+  preview = false,
 }: {
   record: ArtifactRecord;
   settings: Settings;
   renderedAt: number;
+  /** A draft the keeper is looking at. The instrument is usable before the service opens. */
+  preview?: boolean;
 }) {
   const now = useNow(renderedAt);
   const a = resolveArtifact(record, now, settings);
   const time = timeLine(a, settings);
   const paragraphs = (a.description ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
   const open = insideIsOpen(a);
-  const toolOpen = Boolean(a.tool) && open;
+  const toolOpen = Boolean(a.tool) && (open || preview);
   const showInside = Boolean(a.embed || a.media?.length) && open;
 
   const words = (

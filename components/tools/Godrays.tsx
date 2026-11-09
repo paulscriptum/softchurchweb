@@ -11,6 +11,7 @@ import {
 } from 'react';
 import { paramsFromSeed, randomSeed, serial, type GodraysParams } from '@/lib/godrays/params';
 import { GodraysRenderer } from '@/lib/godrays/renderer';
+import { WitnessForm } from '../WitnessForm';
 
 const FORMATS = {
   phone: { label: 'for a phone', width: 1290, height: 2796 },
@@ -77,6 +78,7 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
   const [light, setLight] = useState<[number, number] | null>(null);
   const [format, setFormat] = useState<Format>('phone');
   const [status, setStatus] = useState('');
+  const [invited, setInvited] = useState(false);
   const [failed, setFailed] = useState(false);
   const [touched, setTouched] = useState(false);
 
@@ -162,6 +164,7 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
         setTimeout(() => URL.revokeObjectURL(url), 10_000);
       }
       setStatus('received.');
+      setInvited(true);
     } catch (error) {
       console.error(error);
       setStatus('try again.');
@@ -214,7 +217,7 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
                 touched ? 'opacity-0' : 'opacity-100'
               }`}
             >
-              <span className="rounded-full bg-black/45 px-4 py-2 text-meta text-white/90 backdrop-blur-sm">
+              <span className="inline-flex rounded-full bg-black/45 px-4 py-2 text-meta text-white/90 backdrop-blur-sm">
                 <span className="md:hidden">move your finger across the picture</span>
                 <span className="hidden md:inline">drag across the picture</span>
               </span>
@@ -265,27 +268,33 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
               ))}
             </div>
 
-            <div className="flex flex-col">
-              <button
-                type="button"
-                onClick={receive}
-                disabled={!params || status === 'receiving…'}
-                className={`${row} disabled:cursor-default`}
-              >
-                <span>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={receive}
+                  disabled={!params || status === 'receiving…'}
+                  className="min-h-11 cursor-pointer rounded-full bg-fg px-[22px] text-nav text-bg disabled:cursor-default disabled:opacity-60"
+                >
                   receive<span className="sr-only"> · {title}</span>
-                </span>
+                </button>
                 <span className="text-muted tabular-nums">
-                  {FORMATS[format].width}×{FORMATS[format].height} <span aria-hidden="true">→</span>
+                  {FORMATS[format].width}×{FORMATS[format].height}
                 </span>
-              </button>
+              </div>
               <button type="button" onClick={another} className={`${row} max-md:hidden`}>
                 <span>another pattern</span>
                 <span aria-hidden="true">↻</span>
               </button>
-              <p aria-live="polite" className="min-h-[18px] border-t border-line pt-3 text-muted">
+              <p aria-live="polite" className="min-h-[18px] text-muted">
                 {status}
               </p>
+              {invited ? (
+                <div className="flex flex-col gap-8">
+                  <p className="text-lead font-light tracking-tight">one letter every seventh day</p>
+                  <WitnessForm />
+                </div>
+              ) : null}
             </div>
           </div>
         ) : (

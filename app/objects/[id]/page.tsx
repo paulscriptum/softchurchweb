@@ -64,7 +64,7 @@ async function Detail({ params }: Pick<PageProps<'/objects/[id]'>, 'params'>) {
           back to it
         </Link>
       </p>
-      <ObjectDetail record={draft} settings={site.settings} renderedAt={site.renderedAt} />
+      <ObjectDetail record={draft} settings={site.settings} renderedAt={site.renderedAt} preview />
     </>
   );
 }

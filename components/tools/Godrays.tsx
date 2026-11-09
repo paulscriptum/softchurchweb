@@ -22,7 +22,6 @@ type Format = keyof typeof FORMATS;
 const PREVIEW_LONG_SIDE = 1400;
 const chip =
   'min-h-11 cursor-pointer rounded-full border border-line px-[18px] text-nav aria-pressed:border-fg';
-const row = 'flex min-h-11 cursor-pointer items-center justify-between border-t border-line text-left';
 const clamp = (v: number) => Math.min(0.95, Math.max(0.05, v));
 
 function previewSize(format: Format, scale = 1): [number, number] {
@@ -282,10 +281,6 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
                   {FORMATS[format].width}×{FORMATS[format].height}
                 </span>
               </div>
-              <button type="button" onClick={another} className={`${row} max-md:hidden`}>
-                <span>another pattern</span>
-                <span aria-hidden="true">↻</span>
-              </button>
               <p aria-live="polite" className="min-h-[18px] text-muted">
                 {status}
               </p>

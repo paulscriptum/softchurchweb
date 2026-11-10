@@ -5,7 +5,6 @@ import { ThemeToggle } from './ThemeToggle';
 
 const nav = [
   { id: 'about', label: 'about' },
-  { id: 'how', label: 'how' },
   { id: 'objects', label: 'objects' },
   { id: 'manifesto', label: 'manifesto' },
   { id: 'witness', label: 'witness' },
@@ -37,21 +36,21 @@ export function Header({ home = true }: { home?: boolean }) {
           {logo}
         </Link>
       )}
-      <div className="flex flex-wrap items-center gap-x-3.5 sm:gap-x-6">
-        <nav aria-label="Main" className="flex flex-wrap gap-x-3.5 sm:gap-x-6">
+      <div className="flex w-full flex-nowrap items-center justify-between gap-x-2 text-[12px] sm:w-auto sm:justify-start sm:gap-x-6 sm:text-nav">
+        <nav aria-label="Main" className="flex flex-nowrap gap-x-2 sm:gap-x-6">
           {nav.map((item) => (
             home ? (
-              <a key={item.id} href={`#${item.id}`} className="py-3">
+              <a key={item.id} href={`#${item.id}`} className="whitespace-nowrap py-3">
                 {item.label}
               </a>
             ) : (
-              <Link key={item.id} href={`/#${item.id}`} className="py-3">
+              <Link key={item.id} href={`/#${item.id}`} className="whitespace-nowrap py-3">
                 {item.label}
               </Link>
             )
           ))}
         </nav>
-        <div className="flex items-center gap-x-3.5 sm:gap-x-6">
+        <div className="flex flex-nowrap items-center gap-x-2 sm:gap-x-6">
           <SoundToggle />
           <ThemeToggle />
         </div>

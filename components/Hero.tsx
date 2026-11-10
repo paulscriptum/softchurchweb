@@ -23,7 +23,6 @@ export function Hero({ settings, renderedAt }: { settings: Settings; renderedAt:
         >
           or go straight to the objects <span aria-hidden="true">↓</span>
         </a>
-        <span>soft.church is an art project, not a church.</span>
       </div>
     </section>
   );

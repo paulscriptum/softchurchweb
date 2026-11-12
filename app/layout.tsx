@@ -38,6 +38,11 @@ export const metadata: Metadata = {
     title: DEFAULT_TITLE,
     description: SITE_DESCRIPTION,
   },
+  verification: {
+    other: {
+      'p:domain_verify': 'a880e2b27dc15978d8a3a41ab88aa4d6',
+    },
+  },
 };
 
 export const viewport: Viewport = {

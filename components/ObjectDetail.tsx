@@ -21,12 +21,7 @@ function timeLine(a: ResolvedArtifact, settings: Settings): string | null {
     const when = formatInstant(a.opensAt, settings);
     return a.remaining !== undefined ? `opens ${when} · in ${formatRemaining(a.remaining)}` : `opens ${when}`;
   }
-  if (a.status === 'open' && a.remaining !== undefined) {
-    return a.kind === 'offering'
-      ? `given until ${formatInstant(a.closesAt, settings)} · ${formatRemaining(a.remaining)} left`
-      : `open until ${formatInstant(a.closesAt, settings)} · ${formatRemaining(a.remaining)} left`;
-  }
-  if (a.status === 'closed') return a.kind === 'offering' ? 'the seven days have passed.' : 'this service is closed.';
+  if (a.status === 'closed') return 'this service is closed.';
   return null;
 }
 

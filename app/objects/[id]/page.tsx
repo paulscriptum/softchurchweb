@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { Suspense } from 'react';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
@@ -11,21 +11,38 @@ import { seedArtifacts } from '@/content/artifacts';
 import { isAdmin } from '@/lib/auth';
 import { getSiteData, readSiteData } from '@/lib/data';
 import { objectPath, serviceLine } from '@/lib/artifact';
+import { pad3 } from '@/lib/format';
 import { creativeWorkLd } from '@/lib/structured-data';
 
+function withQuery(path: string, query: Record<string, string | string[] | undefined>): string {
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(query)) {
+    if (typeof value === 'string') params.append(key, value);
+    else if (value) for (const item of value) params.append(key, item);
+  }
+  const search = params.toString();
+  return search ? `${path}?${search}` : path;
+}
+
 export async function generateStaticParams() {
+  // Published objects 308 to /001, so only drafts are real pages at this address.
   try {
-    const { artifacts } = await getSiteData();
-    if (artifacts.length > 0) return artifacts.map((a) => ({ id: a.id }));
+    const drafts = (await readSiteData()).artifacts.filter((artifact) => artifact.draft);
+    if (drafts.length > 0) return drafts.map((artifact) => ({ id: artifact.id }));
   } catch {
     // storage may be out of reach while building; objects added later render on first visit
   }
-  return seedArtifacts.map((a) => ({ id: a.id }));
+  const drafts = seedArtifacts.filter((artifact) => artifact.draft);
+  return (drafts.length > 0 ? drafts : seedArtifacts).map((artifact) => ({ id: artifact.id }));
 }
 
 export async function generateMetadata({ params }: PageProps<'/objects/[id]'>): Promise<Metadata> {
   const { id } = await params;
   const { artifacts } = await getSiteData();
+  const published =
+    artifacts.find((artifact) => artifact.id === id) ??
+    (/^\d{1,3}$/.test(id) ? artifacts.find((artifact) => pad3(artifact.service) === pad3(Number(id))) : undefined);
+  if (published) permanentRedirect(objectPath(published));
   const a = artifacts.find((x) => x.id === id);
   if (!a) return { title: 'nothing is kept here', robots: { index: false, follow: false } };
 
@@ -69,8 +86,13 @@ async function Detail({ params }: Pick<PageProps<'/objects/[id]'>, 'params'>) {
   );
 }
 
-export default async function ObjectPage({ params }: PageProps<'/objects/[id]'>) {
+export default async function ObjectPage({ params, searchParams }: PageProps<'/objects/[id]'>) {
+  const { id } = await params;
   const site = await getSiteData();
+  const published =
+    site.artifacts.find((artifact) => artifact.id === id) ??
+    (/^\d{1,3}$/.test(id) ? site.artifacts.find((artifact) => pad3(artifact.service) === pad3(Number(id))) : undefined);
+  if (published) permanentRedirect(withQuery(objectPath(published), await searchParams));
   return (
     <>
       <Header home={false} />

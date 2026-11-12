@@ -1,4 +1,4 @@
-export const VIAS = ['reddit', 'pinterest', 'hn', 'linkedin', 'telegram', 'arena', 'letter'] as const;
+export const VIAS = ['reddit', 'pinterest', 'instagram', 'hn', 'linkedin', 'telegram', 'arena', 'letter'] as const;
 
 export type Via = (typeof VIAS)[number];
 

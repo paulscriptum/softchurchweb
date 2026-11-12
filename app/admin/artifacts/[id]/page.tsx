@@ -30,7 +30,10 @@ async function Editor({ params, searchParams }: PageProps<'/admin/artifacts/[id]
         </h1>
         <div className="flex flex-wrap gap-3">
           {existing && (
-            <Link href={objectPath(existing)} className={ghostButtonClass + ' inline-flex items-center'}>
+            <Link
+              href={existing.draft ? `/objects/${existing.id}` : objectPath(existing)}
+              className={ghostButtonClass + ' inline-flex items-center'}
+            >
               {existing.draft ? 'see the draft' : 'its page'}
             </Link>
           )}

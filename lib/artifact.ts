@@ -13,7 +13,7 @@ export interface ResolvedArtifact extends Artifact {
   closesAt: number;
   /** true when this artifact belongs to the service that opens next */
   isNext: boolean;
-  /** time left until it opens (upcoming) or until its seven days end (open) */
+  /** time left until it opens */
   remaining?: number;
   weekday: Weekday;
 }
@@ -25,21 +25,8 @@ export function resolveArtifact(
 ): ResolvedArtifact {
   const opensAt = serviceOpensAt(record.service, settings);
   const closesAt = serviceOpensAt(record.service + 1, settings);
-  const status =
-    record.status !== 'auto'
-      ? record.status
-      : now < opensAt
-        ? 'upcoming'
-        : now < closesAt
-          ? 'open'
-          : 'closed';
-
-  const remaining =
-    status === 'upcoming' && now < opensAt
-      ? opensAt - now
-      : status === 'open' && record.status === 'auto'
-        ? closesAt - now
-        : undefined;
+  const status = record.status !== 'auto' ? record.status : now < opensAt ? 'upcoming' : 'open';
+  const remaining = status === 'upcoming' && now < opensAt ? opensAt - now : undefined;
 
   return {
     ...record,
@@ -86,8 +73,9 @@ export type Action =
   | { mode: 'pending'; label: string; timer?: string }
   | { mode: 'muted'; label: string; timer?: string };
 
-export function objectPath(a: Pick<Artifact, 'id'>): string {
-  return `/objects/${a.id}`;
+/** Canonical object URL: three digits, no trailing slash, no query. `/001`. */
+export function objectPath(a: Pick<Artifact, 'service'>): string {
+  return `/${pad3(a.service)}`;
 }
 
 export const INSIDE_ID = 'inside';

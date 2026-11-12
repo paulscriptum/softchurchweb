@@ -203,7 +203,7 @@ export function ArtifactForm({
       </div>
 
       <p className="text-meta text-muted sm:col-span-2">
-        what is inside opens with the service. an offering closes it again after seven days.
+        what is inside opens with the service.
       </p>
 
       <p className="text-meta text-muted sm:col-span-2">

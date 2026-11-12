@@ -12,7 +12,7 @@ const messages: Record<Exclude<State, 'received'>, string> = {
   error: 'try again.',
 };
 
-export function WitnessForm() {
+export function WitnessForm({ id = 'witness-email' }: { id?: string }) {
   const [state, setState] = useState<State>('idle');
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -53,12 +53,12 @@ export function WitnessForm() {
     >
       <h2 className="text-lead font-light tracking-tight">become a witness.</h2>
       <p className="text-meta text-muted">one letter every seventh day. nothing else.</p>
-      <label htmlFor="witness-email" className="text-meta text-muted">
+      <label htmlFor={id} className="text-meta text-muted">
         email
       </label>
       <div className="flex flex-wrap gap-3">
         <input
-          id="witness-email"
+          id={id}
           name="email"
           type="email"
           autoComplete="email"

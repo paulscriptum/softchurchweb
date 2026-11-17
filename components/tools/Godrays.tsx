@@ -124,8 +124,16 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
   }
 
   function moveTo(e: PointerEvent<HTMLCanvasElement>) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setLight([clamp((e.clientX - rect.left) / rect.width), clamp((e.clientY - rect.top) / rect.height)]);
+    const canvas = e.currentTarget;
+    const rect = canvas.getBoundingClientRect();
+    const imgW = canvas.width || rect.width;
+    const imgH = canvas.height || rect.height;
+    const scale = Math.max(rect.width / imgW, rect.height / imgH);
+    const displayedW = imgW * scale;
+    const displayedH = imgH * scale;
+    const x = (e.clientX - rect.left + (displayedW - rect.width) / 2) / displayedW;
+    const y = (e.clientY - rect.top + (displayedH - rect.height) / 2) / displayedH;
+    setLight([clamp(x), clamp(y)]);
   }
 
   function nudge(e: KeyboardEvent<HTMLCanvasElement>) {
@@ -206,7 +214,9 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
             }}
             style={{ aspectRatio: `${w} / ${h}` }}
             className={`block cursor-crosshair touch-none bg-[#1a1817] ${
-              phone ? 'h-auto w-full md:h-[min(78svh,820px)] md:w-auto' : 'h-auto w-full'
+              phone
+                ? 'h-[calc(100svh-305px-env(safe-area-inset-top)-env(safe-area-inset-bottom))] w-full object-cover object-center md:h-[min(78svh,820px)] md:w-auto md:object-fill'
+                : 'h-auto w-full'
             }`}
           />
           {working && seed !== null && (

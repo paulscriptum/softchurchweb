@@ -139,7 +139,7 @@ export function ObjectDetail({
           title={a.title}
           intro={
             <>
-              <div className="max-md:order-2">{heading}</div>
+              <div className="max-md:order-2 max-md:mt-6">{heading}</div>
               {body ? <div className="max-md:order-7">{body}</div> : null}
               {time && <p className="text-meta text-muted tabular-nums max-md:order-7">{time}</p>}
             </>

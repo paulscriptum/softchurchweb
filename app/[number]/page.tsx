@@ -123,7 +123,7 @@ export default async function ObjectNumberPage({ params }: Props) {
   return (
     <>
       <Header home={false} />
-      <main className="mx-auto flex max-w-content flex-col gap-10 px-6 pt-6 pb-[120px]">
+      <main className="mx-auto flex max-w-content flex-col gap-10 px-6 pt-6 pb-[120px] max-md:gap-4 max-md:pt-4">
         <Link href="/#objects" className="self-start py-3 text-meta text-muted">
           ← objects
         </Link>

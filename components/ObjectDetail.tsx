@@ -98,23 +98,27 @@ export function ObjectDetail({
   const toolOpen = Boolean(a.tool) && (open || preview);
   const showInside = Boolean(a.embed || a.media?.length) && open;
 
+  const heading = (
+    <div className="flex flex-col gap-1.5">
+      <span className="text-meta text-muted">{serviceLine(a)}</span>
+      <h1 className="text-lead font-normal tracking-tight">{a.title}</h1>
+      <span className="text-meta text-muted">{metaLine(a)}</span>
+    </div>
+  );
+  const body =
+    paragraphs.length > 0 ? (
+      <div className="flex flex-col gap-4 text-base text-body">
+        {paragraphs.map((p, i) => (
+          <p key={i} className="whitespace-pre-line">
+            {p}
+          </p>
+        ))}
+      </div>
+    ) : null;
   const words = (
     <>
-      <div className="flex flex-col gap-1.5">
-        <span className="text-meta text-muted">{serviceLine(a)}</span>
-        <h1 className="text-lead font-normal tracking-tight">{a.title}</h1>
-        <span className="text-meta text-muted">{metaLine(a)}</span>
-      </div>
-
-      {paragraphs.length > 0 && (
-        <div className="flex flex-col gap-4 text-base text-body">
-          {paragraphs.map((p, i) => (
-            <p key={i} className="whitespace-pre-line">
-              {p}
-            </p>
-          ))}
-        </div>
-      )}
+      {heading}
+      {body}
     </>
   );
 
@@ -135,8 +139,9 @@ export function ObjectDetail({
           title={a.title}
           intro={
             <>
-              {words}
-              {time && <p className="text-meta text-muted tabular-nums">{time}</p>}
+              <div className="max-md:order-2">{heading}</div>
+              {body ? <div className="max-md:order-7">{body}</div> : null}
+              {time && <p className="text-meta text-muted tabular-nums max-md:order-7">{time}</p>}
             </>
           }
         />

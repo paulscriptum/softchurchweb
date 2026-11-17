@@ -178,12 +178,12 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
     <article
       className={
         phone
-          ? 'grid gap-10 md:grid-cols-[auto_minmax(0,1fr)] md:gap-16'
+          ? 'flex flex-col gap-4 md:grid md:grid-cols-[auto_minmax(0,1fr)] md:gap-16'
           : 'flex flex-col gap-10'
       }
     >
-      <div className={`flex flex-col gap-3 ${phone ? 'mx-auto w-fit max-w-full md:mx-0' : 'w-full'}`}>
-        <div className="relative">
+      <div className={`flex flex-col gap-2 md:gap-3 ${phone ? 'w-full md:w-fit' : 'w-full'}`}>
+        <div className="relative w-full md:w-fit">
           <canvas
             ref={canvasRef}
             width={w}
@@ -206,13 +206,13 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
             }}
             style={{ aspectRatio: `${w} / ${h}` }}
             className={`block cursor-crosshair touch-none bg-[#1a1817] ${
-              phone ? 'h-[min(68svh,820px)] w-auto max-w-full md:h-[min(78svh,820px)]' : 'h-auto w-full'
+              phone ? 'h-auto w-full md:h-[min(78svh,820px)] md:w-auto' : 'h-auto w-full'
             }`}
           />
           {working && seed !== null && (
             <p
               aria-hidden="true"
-              className={`pointer-events-none absolute inset-x-0 bottom-6 flex justify-center px-4 transition-opacity duration-700 ${
+              className={`pointer-events-none absolute inset-x-0 bottom-6 hidden justify-center px-4 transition-opacity duration-700 md:flex ${
                 touched ? 'opacity-0' : 'opacity-100'
               }`}
             >
@@ -225,15 +225,15 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
         </div>
 
         {working && (
-          <div className="flex min-h-11 items-center justify-between gap-4 text-meta">
-            <span className="text-muted">
+          <div className="flex min-h-11 w-full items-center justify-between gap-3 text-meta">
+            <span className="whitespace-nowrap text-muted">
               <span className="md:hidden">move your finger to move the light</span>
               <span className="hidden md:inline">drag to move the light</span>
             </span>
             <button
               type="button"
               onClick={another}
-              className="-mr-2 min-h-11 cursor-pointer px-2 text-nav"
+              className="-mr-2 min-h-11 shrink-0 cursor-pointer whitespace-nowrap px-2 text-nav"
             >
               another pattern <span aria-hidden="true">↻</span>
             </button>
@@ -241,19 +241,19 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
         )}
       </div>
 
-      <div className="flex max-w-[460px] flex-col gap-8 md:sticky md:top-10 md:self-start md:pt-2">
-        {intro}
+      <div className="flex max-w-[460px] flex-col gap-8 max-md:contents md:sticky md:top-10 md:self-start md:pt-2">
+        <div className="flex flex-col gap-8 max-md:contents">{intro}</div>
 
         {working ? (
-          <div className="flex flex-col gap-6 text-meta">
-            <div className="flex flex-col gap-1.5">
-              <span className="text-nav tabular-nums">{seed === null ? 'n° ······' : serial(seed)}</span>
-              <span className="text-muted">
+          <div className="flex flex-col gap-6 text-meta max-md:contents">
+            <div className="flex flex-col gap-1.5 max-md:contents">
+              <span className="text-nav tabular-nums max-md:order-3">{seed === null ? 'n° ······' : serial(seed)}</span>
+              <span className="text-muted max-md:order-7">
                 every pattern has its own number. move the light, choose a size, then receive it.
               </span>
             </div>
 
-            <div className="flex flex-wrap gap-2" role="group" aria-label="size">
+            <div className="flex flex-wrap gap-2 max-md:order-4" role="group" aria-label="size">
               {(Object.keys(FORMATS) as Format[]).map((f) => (
                 <button
                   key={f}
@@ -267,7 +267,7 @@ export function Godrays({ title, intro }: { title: string; intro: ReactNode }) {
               ))}
             </div>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 max-md:order-5">
               <div className="flex flex-wrap items-center gap-3">
                 <button
                   type="button"
